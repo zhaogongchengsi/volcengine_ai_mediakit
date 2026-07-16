@@ -18,6 +18,10 @@ import type {
   EraseVideoSubtitleParams,
   EraseVideoSubtitleResult,
 } from './tools/erase-video-subtitle.js'
+import type {
+  VideoUnderstandParams,
+  VideoUnderstandResult,
+} from './tools/video-understand.js'
 import type { CreateTaskResponse, MediakitConfig, TaskResult, WaitForTaskOptions } from './types.js'
 import { HttpClient } from '../http/index.js'
 import { getTask, waitForTask } from './base-client.js'
@@ -43,6 +47,10 @@ import {
   eraseVideoSubtitleStandard,
   eraseVideoSubtitleStandardAndWait,
 } from './tools/erase-video-subtitle.js'
+import {
+  videoUnderstand,
+  videoUnderstandAndWait,
+} from './tools/video-understand.js'
 
 export {
   dramaRecap,
@@ -58,6 +66,8 @@ export {
   eraseVideoSubtitleStandard,
   eraseVideoSubtitleStandardAndWait,
   getTask,
+  videoUnderstand,
+  videoUnderstandAndWait,
   waitForTask,
 }
 
@@ -83,6 +93,12 @@ export type {
   EraseVideoSubtitleParams,
   EraseVideoSubtitleResult,
 } from './tools/erase-video-subtitle.js'
+export type {
+  VideoUnderstandManualOption,
+  VideoUnderstandParams,
+  VideoUnderstandResult,
+  VideoUnderstandTokenUsage,
+} from './tools/video-understand.js'
 
 export type {
   CreateTaskResponse,
@@ -216,5 +232,20 @@ export class Mediakit {
     options?: WaitForTaskOptions,
   ): Promise<TaskResult<DramaRecapVerticalResult>> {
     return dramaRecapVerticalAndWait(this.client, params, options)
+  }
+
+  /* ── 视频理解（高光片段提取） ── */
+
+  videoUnderstand(
+    params: VideoUnderstandParams,
+  ): Promise<CreateTaskResponse> {
+    return videoUnderstand(this.client, params)
+  }
+
+  videoUnderstandAndWait(
+    params: VideoUnderstandParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<VideoUnderstandResult>> {
+    return videoUnderstandAndWait(this.client, params, options)
   }
 }
