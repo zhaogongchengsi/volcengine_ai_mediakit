@@ -56,6 +56,17 @@ const result2 = await client.enhanceVideoAndWait(
   { video_url: '...', resolution: '1080p' },
   { timeout: 120_000 },
 )
+
+// 视频理解（高光片段提取）
+const { task_id: vuTaskId } = await client.videoUnderstand({
+  video_urls: ['https://example.com/video.mp4'],
+  prompt: '请提取视频中的高光片段，标注出现的时间段和内容描述',
+  level: 'Balanced', // Economy（默认）| Balanced | Quality
+})
+
+const vuResult = await client.waitForTask(vuTaskId)
+console.log(vuResult.result?.contents) // 各视频的分析结果
+console.log(vuResult.result?.token_usage) // Token 用量统计
 ```
 
 ### 直接调用独立函数
@@ -101,6 +112,8 @@ const res = await http.post('/api/v1/tools/enhance-video', {
 | `waitForTask(taskId, options?)` | `Promise\<TaskResult\>` | 轮询等待任务完成 |
 | `enhanceVideo(params)` | `Promise\<CreateTaskResponse\>` | 提交画质增强任务 |
 | `enhanceVideoAndWait(params, options?)` | `Promise\<TaskResult\<EnhanceVideoResult\>\>` | 提交画质增强任务并等待完成 |
+| `videoUnderstand(params)` | `Promise\<CreateTaskResponse\>` | 提交视频理解任务 |
+| `videoUnderstandAndWait(params, options?)` | `Promise\<TaskResult\<VideoUnderstandResult\>\>` | 提交视频理解任务并等待完成 |
 
 ### `waitForTask` 选项
 
@@ -121,6 +134,19 @@ const res = await http.post('/api/v1/tools/enhance-video', {
 | `resolution_limit` | `number` | 短边像素限制 [64, 2160]（与 `resolution` 互斥） |
 | `fps` | `number` | 输出帧率，最高 120 |
 
+### 视频理解参数
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `video_urls` | `string[]` | 是 | 待处理视频 URL 列表，最多 10 个，单视频不超过 2 小时 |
+| `prompt` | `string` | 是 | 提示词，指导大模型分析视频内容 |
+| `level` | `'Economy' \| 'Balanced' \| 'Quality'` | 否 | 分析档位，默认 `Economy` |
+| `prefer_models` | `string[]` | 否 | 优先使用的模型 ID 列表 |
+| `prefer_endpoints` | `string[]` | 否 | 优先使用的推理接入点 ID 列表 |
+| `manual_option` | `object` | 否 | 手动模式参数（截图帧数、音频分析开关） |
+| `client_token` | `string` | 否 | 幂等控制凭证 |
+| `callback_url` | `string` | 否 | 任务结果回调 URL |
+
 ### 独立函数
 
 除类实例方法外，所有功能均可通过独立函数直接调用：
@@ -131,6 +157,8 @@ import {
   enhanceVideoAndWait,
   getTask,
   HttpClient,
+  videoUnderstand,
+  videoUnderstandAndWait,
   waitForTask,
 } from '@zzhqux/volcengine-ai-mediakit'
 
@@ -140,6 +168,8 @@ http.setApiKey('xxx')
 enhanceVideo(http, params)
 enhanceVideoAndWait(http, params)
 getTask(http, taskId)
+videoUnderstand(http, params)
+videoUnderstandAndWait(http, params)
 waitForTask(http, taskId, options)
 ```
 
@@ -154,8 +184,9 @@ src/
 │   ├── index.ts          # Mediakit 主类 + 统一导出
 │   ├── types.ts          # 领域类型定义
 │   ├── base-client.ts    # getTask / waitForTask
-│   └── tools/            # 各工具独立模块
-│       └── enhance-video.ts  # 画质增强
+│   └── tools/                # 各工具独立模块
+│       ├── enhance-video.ts      # 画质增强
+│       └── video-understand.ts   # 视频理解（高光片段提取）
 └── index.ts              # 包入口
 ```
 
