@@ -1,20 +1,9 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { ApiResponse } from './types.js'
+
 import axios from 'axios'
 
-/* ── Types ── */
-
-/** 火山引擎 AI MediaKit 通用 API 响应 */
-export interface ApiResponse<T = unknown> {
-  success: boolean
-  task_id?: string
-  request_id: string
-  task_type?: string
-  status?: string
-  result?: T
-  expires_at?: number
-  created_at?: number
-  finished_at?: number
-}
+export type { ApiResponse }
 
 /** 扩展 Axios 配置，支持单次调用覆盖 API Key */
 export interface RequestConfig extends AxiosRequestConfig {
@@ -89,16 +78,31 @@ function createClient(baseURL: string): AxiosInstance {
  */
 export class HttpClient {
   private client: AxiosInstance
+  private apiKey?: string
 
   constructor(baseURL = 'https://mediakit.cn-beijing.volces.com') {
     this.client = createClient(baseURL)
+  }
+
+  /** 设置当前实例的 API Key */
+  setApiKey(key: string): void {
+    this.apiKey = key
+  }
+
+  /** 获取当前实例的 API Key */
+  getApiKey(): string | undefined {
+    return this.apiKey
   }
 
   async get<T = unknown>(
     url: string,
     config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
-    const { data } = await this.client.get<ApiResponse<T>>(url, config)
+    const merged: RequestConfig = {
+      ...config,
+      apiKey: config?.apiKey ?? this.apiKey,
+    }
+    const { data } = await this.client.get<ApiResponse<T>>(url, merged)
     return data
   }
 
@@ -107,7 +111,26 @@ export class HttpClient {
     body?: unknown,
     config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
-    const { data } = await this.client.post<ApiResponse<T>>(url, body, config)
+    const merged: RequestConfig = {
+      ...config,
+      apiKey: config?.apiKey ?? this.apiKey,
+    }
+    const { data } = await this.client.post<ApiResponse<T>>(url, body, merged)
+    return data
+  }
+
+  /**
+   * 发起任意 HTTP 请求，直接传递 Axios 配置。
+   * 适用于非标准端点或需要精细控制的场景。
+   */
+  async request<T = unknown>(
+    config: AxiosRequestConfig & { apiKey?: string },
+  ): Promise<ApiResponse<T>> {
+    const merged: AxiosRequestConfig & { apiKey?: string } = {
+      ...config,
+      apiKey: config.apiKey ?? this.apiKey,
+    }
+    const { data } = await this.client.request<ApiResponse<T>>(merged)
     return data
   }
 }
