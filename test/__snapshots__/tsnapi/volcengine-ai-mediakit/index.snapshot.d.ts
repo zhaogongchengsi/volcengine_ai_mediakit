@@ -84,10 +84,10 @@ export declare class HttpClient {
 export declare class Mediakit {
   private client;
   constructor(_: MediakitConfig);
-  getTask(_: string): Promise<TaskResult<unknown>>;
-  waitForTask(_: string, _?: Parameters<typeof waitForTask>[2]): Promise<TaskResult<unknown>>;
-  enhanceVideo(_: Parameters<typeof enhanceVideo>[1]): Promise<CreateTaskResponse>;
-  enhanceVideoAndWait(_: Parameters<typeof enhanceVideoAndWait>[1], _?: Parameters<typeof enhanceVideoAndWait>[2]): Promise<TaskResult<EnhanceVideoResult>>;
+  getTask(_: string): Promise<TaskResult>;
+  waitForTask(_: string, _?: WaitForTaskOptions): Promise<TaskResult>;
+  enhanceVideo(_: EnhanceVideoParams): Promise<CreateTaskResponse>;
+  enhanceVideoAndWait(_: EnhanceVideoParams, _?: WaitForTaskOptions): Promise<TaskResult<EnhanceVideoResult>>;
 }
 // #endregion
 
