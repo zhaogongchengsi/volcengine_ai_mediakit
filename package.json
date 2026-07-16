@@ -33,6 +33,9 @@
     "typecheck": "tsc",
     "prepare": "git config core.hooksPath .githooks && simple-git-hooks && skills-npm"
   },
+  "dependencies": {
+    "axios": "catalog:"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:cli",
     "@antfu/ni": "catalog:cli",
