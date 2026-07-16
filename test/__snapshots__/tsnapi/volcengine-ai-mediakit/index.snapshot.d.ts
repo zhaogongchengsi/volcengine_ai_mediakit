@@ -18,6 +18,54 @@ export interface CreateTaskResponse {
   task_id: string;
   request_id: string;
 }
+export interface DramaRecapParams {
+  drama_script_task_id: string;
+  erase_subtitle?: boolean;
+  erase_mode?: 'standard';
+  recap_text?: string;
+  batch_count?: number;
+  drama_recap_config?: DramaRecapConfig;
+  speaker_config?: SpeakerConfig;
+  subtitle_config?: SubtitleConfig;
+  miniseries_edit?: MiniseriesEdit;
+}
+export interface DramaRecapResult {
+  video_url: string;
+  video_urls: string[];
+  duration: number;
+  total_count: number;
+  success_count: number;
+  failed_count: number;
+  error: Record<string, unknown>;
+}
+export interface DramaRecapVerticalParams {
+  video_urls: string[];
+  mode: DramaRecapVerticalMode;
+  max_count?: number;
+  min_duration?: number;
+  max_duration?: number;
+  opening_hook?: OpeningHookMode;
+  narrate_options?: NarrateOptions;
+  narrate_bgm_url?: string;
+  text_options?: TextOptions;
+  edit_param?: EditParam;
+}
+export interface DramaRecapVerticalResult {
+  input_duration: number;
+  output_duration: number;
+  mode: string;
+  video_urls: string[];
+  video_infos: VideoInfo[];
+}
+export interface DramaScriptParams {
+  video_urls: string[];
+  return_pkg?: boolean;
+}
+export interface DramaScriptResult {
+  result_url: string;
+  duration: number;
+  drama_script_task_id: string;
+}
 export interface EnhanceVideoParams {
   video_url: string;
   scene?: 'aigc' | 'short_series' | 'ugc' | 'old_film';
@@ -32,6 +80,15 @@ export interface EnhanceVideoResult {
   resolution: string;
   tool_version: string;
   video_url: string;
+}
+export interface EraseVideoSubtitleParams {
+  video_url: string;
+  mode?: EraseSubtitleMode;
+  erase_ratio_location?: EraseRatioLocation[];
+}
+export interface EraseVideoSubtitleResult {
+  video_url: string;
+  duration: number;
 }
 export interface MediakitConfig {
   apiKey: string;
@@ -84,16 +141,36 @@ export declare class HttpClient {
 export declare class Mediakit {
   private client;
   constructor(_: MediakitConfig);
-  getTask(_: string): Promise<TaskResult<unknown>>;
-  waitForTask(_: string, _?: Parameters<typeof waitForTask>[2]): Promise<TaskResult<unknown>>;
-  enhanceVideo(_: Parameters<typeof enhanceVideo>[1]): Promise<CreateTaskResponse>;
-  enhanceVideoAndWait(_: Parameters<typeof enhanceVideoAndWait>[1], _?: Parameters<typeof enhanceVideoAndWait>[2]): Promise<TaskResult<EnhanceVideoResult>>;
+  getTask(_: string): Promise<TaskResult>;
+  waitForTask(_: string, _?: WaitForTaskOptions): Promise<TaskResult>;
+  enhanceVideo(_: EnhanceVideoParams): Promise<CreateTaskResponse>;
+  enhanceVideoAndWait(_: EnhanceVideoParams, _?: WaitForTaskOptions): Promise<TaskResult<EnhanceVideoResult>>;
+  eraseVideoSubtitlePro(_: EraseVideoSubtitleParams): Promise<CreateTaskResponse>;
+  eraseVideoSubtitleProAndWait(_: EraseVideoSubtitleParams, _?: WaitForTaskOptions): Promise<TaskResult<EraseVideoSubtitleResult>>;
+  eraseVideoSubtitleStandard(_: EraseVideoSubtitleParams): Promise<CreateTaskResponse>;
+  eraseVideoSubtitleStandardAndWait(_: EraseVideoSubtitleParams, _?: WaitForTaskOptions): Promise<TaskResult<EraseVideoSubtitleResult>>;
+  dramaScript(_: DramaScriptParams): Promise<CreateTaskResponse>;
+  dramaScriptAndWait(_: DramaScriptParams, _?: WaitForTaskOptions): Promise<TaskResult<DramaScriptResult>>;
+  dramaRecap(_: DramaRecapParams): Promise<CreateTaskResponse>;
+  dramaRecapAndWait(_: DramaRecapParams, _?: WaitForTaskOptions): Promise<TaskResult<DramaRecapResult>>;
+  dramaRecapVertical(_: DramaRecapVerticalParams): Promise<CreateTaskResponse>;
+  dramaRecapVerticalAndWait(_: DramaRecapVerticalParams, _?: WaitForTaskOptions): Promise<TaskResult<DramaRecapVerticalResult>>;
 }
 // #endregion
 
 // #region Functions
+export declare function dramaRecap(_: HttpClient, _: DramaRecapParams): Promise<CreateTaskResponse>;
+export declare function dramaRecapAndWait(_: HttpClient, _: DramaRecapParams, _?: WaitForTaskOptions): Promise<TaskResult<DramaRecapResult>>;
+export declare function dramaRecapVertical(_: HttpClient, _: DramaRecapVerticalParams): Promise<CreateTaskResponse>;
+export declare function dramaRecapVerticalAndWait(_: HttpClient, _: DramaRecapVerticalParams, _?: WaitForTaskOptions): Promise<TaskResult<DramaRecapVerticalResult>>;
+export declare function dramaScript(_: HttpClient, _: DramaScriptParams): Promise<CreateTaskResponse>;
+export declare function dramaScriptAndWait(_: HttpClient, _: DramaScriptParams, _?: WaitForTaskOptions): Promise<TaskResult<DramaScriptResult>>;
 export declare function enhanceVideo(_: HttpClient, _: EnhanceVideoParams): Promise<CreateTaskResponse>;
 export declare function enhanceVideoAndWait(_: HttpClient, _: EnhanceVideoParams, _?: WaitForTaskOptions): Promise<TaskResult<EnhanceVideoResult>>;
+export declare function eraseVideoSubtitlePro(_: HttpClient, _: EraseVideoSubtitleParams): Promise<CreateTaskResponse>;
+export declare function eraseVideoSubtitleProAndWait(_: HttpClient, _: EraseVideoSubtitleParams, _?: WaitForTaskOptions): Promise<TaskResult<EraseVideoSubtitleResult>>;
+export declare function eraseVideoSubtitleStandard(_: HttpClient, _: EraseVideoSubtitleParams): Promise<CreateTaskResponse>;
+export declare function eraseVideoSubtitleStandardAndWait(_: HttpClient, _: EraseVideoSubtitleParams, _?: WaitForTaskOptions): Promise<TaskResult<EraseVideoSubtitleResult>>;
 export declare function getTask(_: HttpClient, _: string): Promise<TaskResult>;
 export declare function setApiKey(_: string): void;
 export declare function waitForTask(_: HttpClient, _: string, _?: WaitForTaskOptions): Promise<TaskResult>;

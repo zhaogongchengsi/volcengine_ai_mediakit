@@ -1,7 +1,23 @@
 export { ApiError, http, HttpClient, setApiKey } from './http/index.js'
 export type { ApiResponse, RequestConfig } from './http/index.js'
 
-export { enhanceVideo, enhanceVideoAndWait, getTask, Mediakit, waitForTask } from './mediakit/index.js'
+export {
+  dramaRecap,
+  dramaRecapAndWait,
+  dramaRecapVertical,
+  dramaRecapVerticalAndWait,
+  dramaScript,
+  dramaScriptAndWait,
+  enhanceVideo,
+  enhanceVideoAndWait,
+  eraseVideoSubtitlePro,
+  eraseVideoSubtitleProAndWait,
+  eraseVideoSubtitleStandard,
+  eraseVideoSubtitleStandardAndWait,
+  getTask,
+  Mediakit,
+  waitForTask,
+} from './mediakit/index.js'
 export type {
   CreateTaskResponse,
   MediakitConfig,
@@ -10,6 +26,22 @@ export type {
   WaitForTaskOptions,
 } from './mediakit/index.js'
 export type {
+  DramaRecapParams,
+  DramaRecapResult,
+} from './mediakit/index.js'
+export type {
+  DramaRecapVerticalParams,
+  DramaRecapVerticalResult,
+} from './mediakit/index.js'
+export type {
+  DramaScriptParams,
+  DramaScriptResult,
+} from './mediakit/index.js'
+export type {
   EnhanceVideoParams,
   EnhanceVideoResult,
+} from './mediakit/index.js'
+export type {
+  EraseVideoSubtitleParams,
+  EraseVideoSubtitleResult,
 } from './mediakit/index.js'
