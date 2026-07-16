@@ -1,24 +1,20 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { __mockClient as mockClient } from '../../http/index.js'
 import { Mediakit } from '../index.js'
 
+const mockClient = vi.hoisted(() => ({
+  get: vi.fn(),
+  post: vi.fn(),
+  setApiKey: vi.fn(),
+  getApiKey: vi.fn(),
+}))
+
 vi.mock('../../http/index.js', () => {
-  const mockClient = {
-    get: vi.fn(),
-    post: vi.fn(),
-    setApiKey: vi.fn(),
-    getApiKey: vi.fn(),
-  }
-
-  const HttpClient = vi.fn().mockImplementation(
-    class {
-      constructor() {
-        return mockClient
-      }
-    },
-  )
-
+  const HttpClient = vi.fn().mockImplementation(class {
+    constructor() {
+      return mockClient
+    }
+  } as any)
   return { HttpClient, __mockClient: mockClient }
 })
 
