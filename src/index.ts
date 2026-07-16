@@ -16,6 +16,8 @@ export {
   eraseVideoSubtitleStandardAndWait,
   getTask,
   Mediakit,
+  videoUnderstand,
+  videoUnderstandAndWait,
   waitForTask,
 } from './mediakit/index.js'
 export type {
@@ -44,4 +46,10 @@ export type {
 export type {
   EraseVideoSubtitleParams,
   EraseVideoSubtitleResult,
+} from './mediakit/index.js'
+export type {
+  VideoUnderstandManualOption,
+  VideoUnderstandParams,
+  VideoUnderstandResult,
+  VideoUnderstandTokenUsage,
 } from './mediakit/index.js'
