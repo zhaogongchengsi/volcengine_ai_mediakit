@@ -1,23 +1,88 @@
 import type {
+  DramaRecapVerticalParams,
+  DramaRecapVerticalResult,
+} from './tools/drama-recap-vertical.js'
+import type {
+  DramaRecapParams,
+  DramaRecapResult,
+} from './tools/drama-recap.js'
+import type {
+  DramaScriptParams,
+  DramaScriptResult,
+} from './tools/drama-script.js'
+import type {
   EnhanceVideoParams,
   EnhanceVideoResult,
 } from './tools/enhance-video.js'
+import type {
+  EraseVideoSubtitleParams,
+  EraseVideoSubtitleResult,
+} from './tools/erase-video-subtitle.js'
 import type { CreateTaskResponse, MediakitConfig, TaskResult, WaitForTaskOptions } from './types.js'
 import { HttpClient } from '../http/index.js'
 import { getTask, waitForTask } from './base-client.js'
 import {
+  dramaRecapVertical,
+  dramaRecapVerticalAndWait,
+} from './tools/drama-recap-vertical.js'
+import {
+  dramaRecap,
+  dramaRecapAndWait,
+} from './tools/drama-recap.js'
+import {
+  dramaScript,
+  dramaScriptAndWait,
+} from './tools/drama-script.js'
+import {
   enhanceVideo,
   enhanceVideoAndWait,
 } from './tools/enhance-video.js'
+import {
+  eraseVideoSubtitlePro,
+  eraseVideoSubtitleProAndWait,
+  eraseVideoSubtitleStandard,
+  eraseVideoSubtitleStandardAndWait,
+} from './tools/erase-video-subtitle.js'
 
-export { enhanceVideo, enhanceVideoAndWait, getTask, waitForTask }
+export {
+  dramaRecap,
+  dramaRecapAndWait,
+  dramaRecapVertical,
+  dramaRecapVerticalAndWait,
+  dramaScript,
+  dramaScriptAndWait,
+  enhanceVideo,
+  enhanceVideoAndWait,
+  eraseVideoSubtitlePro,
+  eraseVideoSubtitleProAndWait,
+  eraseVideoSubtitleStandard,
+  eraseVideoSubtitleStandardAndWait,
+  getTask,
+  waitForTask,
+}
 
 /* ── Re-exports ── */
 
 export type {
+  DramaRecapVerticalParams,
+  DramaRecapVerticalResult,
+} from './tools/drama-recap-vertical.js'
+export type {
+  DramaRecapParams,
+  DramaRecapResult,
+} from './tools/drama-recap.js'
+export type {
+  DramaScriptParams,
+  DramaScriptResult,
+} from './tools/drama-script.js'
+export type {
   EnhanceVideoParams,
   EnhanceVideoResult,
 } from './tools/enhance-video.js'
+export type {
+  EraseVideoSubtitleParams,
+  EraseVideoSubtitleResult,
+} from './tools/erase-video-subtitle.js'
 
 export type {
   CreateTaskResponse,
@@ -80,5 +145,76 @@ export class Mediakit {
     options?: WaitForTaskOptions,
   ): Promise<TaskResult<EnhanceVideoResult>> {
     return enhanceVideoAndWait(this.client, params, options)
+  }
+
+  /* ── 字幕擦除（精细化版） ── */
+
+  eraseVideoSubtitlePro(
+    params: EraseVideoSubtitleParams,
+  ): Promise<CreateTaskResponse> {
+    return eraseVideoSubtitlePro(this.client, params)
+  }
+
+  eraseVideoSubtitleProAndWait(
+    params: EraseVideoSubtitleParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<EraseVideoSubtitleResult>> {
+    return eraseVideoSubtitleProAndWait(this.client, params, options)
+  }
+
+  /* ── 字幕擦除（标准版） ── */
+
+  eraseVideoSubtitleStandard(
+    params: EraseVideoSubtitleParams,
+  ): Promise<CreateTaskResponse> {
+    return eraseVideoSubtitleStandard(this.client, params)
+  }
+
+  eraseVideoSubtitleStandardAndWait(
+    params: EraseVideoSubtitleParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<EraseVideoSubtitleResult>> {
+    return eraseVideoSubtitleStandardAndWait(this.client, params, options)
+  }
+
+  /* ── 剧本还原 ── */
+
+  dramaScript(params: DramaScriptParams): Promise<CreateTaskResponse> {
+    return dramaScript(this.client, params)
+  }
+
+  dramaScriptAndWait(
+    params: DramaScriptParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<DramaScriptResult>> {
+    return dramaScriptAndWait(this.client, params, options)
+  }
+
+  /* ── 解说视频生成 ── */
+
+  dramaRecap(params: DramaRecapParams): Promise<CreateTaskResponse> {
+    return dramaRecap(this.client, params)
+  }
+
+  dramaRecapAndWait(
+    params: DramaRecapParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<DramaRecapResult>> {
+    return dramaRecapAndWait(this.client, params, options)
+  }
+
+  /* ── 解说视频生成（短剧行业模型） ── */
+
+  dramaRecapVertical(
+    params: DramaRecapVerticalParams,
+  ): Promise<CreateTaskResponse> {
+    return dramaRecapVertical(this.client, params)
+  }
+
+  dramaRecapVerticalAndWait(
+    params: DramaRecapVerticalParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<DramaRecapVerticalResult>> {
+    return dramaRecapVerticalAndWait(this.client, params, options)
   }
 }

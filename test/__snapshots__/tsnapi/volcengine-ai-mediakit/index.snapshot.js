@@ -25,12 +25,32 @@ export class Mediakit {
   waitForTask(_, _) {}
   enhanceVideo(_) {}
   enhanceVideoAndWait(_, _) {}
+  eraseVideoSubtitlePro(_) {}
+  eraseVideoSubtitleProAndWait(_, _) {}
+  eraseVideoSubtitleStandard(_) {}
+  eraseVideoSubtitleStandardAndWait(_, _) {}
+  dramaScript(_) {}
+  dramaScriptAndWait(_, _) {}
+  dramaRecap(_) {}
+  dramaRecapAndWait(_, _) {}
+  dramaRecapVertical(_) {}
+  dramaRecapVerticalAndWait(_, _) {}
 }
 // #endregion
 
 // #region Functions
+export async function dramaRecap(_, _) {}
+export async function dramaRecapAndWait(_, _, _) {}
+export async function dramaRecapVertical(_, _) {}
+export async function dramaRecapVerticalAndWait(_, _, _) {}
+export async function dramaScript(_, _) {}
+export async function dramaScriptAndWait(_, _, _) {}
 export async function enhanceVideo(_, _) {}
 export async function enhanceVideoAndWait(_, _, _) {}
+export async function eraseVideoSubtitlePro(_, _) {}
+export async function eraseVideoSubtitleProAndWait(_, _, _) {}
+export async function eraseVideoSubtitleStandard(_, _) {}
+export async function eraseVideoSubtitleStandardAndWait(_, _, _) {}
 export async function getTask(_, _) {}
 export function setApiKey(_) {}
 export async function waitForTask(_, _, _) {}
