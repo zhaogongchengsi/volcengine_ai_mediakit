@@ -1,4 +1,4 @@
-# volcengine-ai-mediakit
+# @zzhqux/volcengine-ai-mediakit
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -12,11 +12,11 @@ AI MediaKit 是火山引擎视频云推出的智能多媒体工具集，提供�
 ## 安装
 
 ```bash
-npm install volcengine-ai-mediakit
+npm install @zzhqux/volcengine-ai-mediakit
 ```
 
 ```bash
-pnpm add volcengine-ai-mediakit
+pnpm add @zzhqux/volcengine-ai-mediakit
 ```
 
 ## 快速开始
@@ -24,7 +24,7 @@ pnpm add volcengine-ai-mediakit
 ### 使用 Mediakit 类（推荐）
 
 ```ts
-import { Mediakit } from 'volcengine-ai-mediakit'
+import { Mediakit } from '@zzhqux/volcengine-ai-mediakit'
 
 const client = new Mediakit({
   apiKey: 'your-api-key',
@@ -61,7 +61,7 @@ const result2 = await client.enhanceVideoAndWait(
 ### 直接调用独立函数
 
 ```ts
-import { enhanceVideo, getTask, HttpClient } from 'volcengine-ai-mediakit'
+import { enhanceVideo, getTask, HttpClient } from '@zzhqux/volcengine-ai-mediakit'
 
 const http = new HttpClient()
 http.setApiKey('your-api-key')
@@ -74,7 +74,7 @@ const task = await getTask(http, task_id)
 ### 低层级 HTTP 客户端
 
 ```ts
-import { http, setApiKey } from 'volcengine-ai-mediakit'
+import { http, setApiKey } from '@zzhqux/volcengine-ai-mediakit'
 
 setApiKey('your-api-key')
 
@@ -132,7 +132,7 @@ import {
   getTask,
   HttpClient,
   waitForTask,
-} from 'volcengine-ai-mediakit'
+} from '@zzhqux/volcengine-ai-mediakit'
 
 const http = new HttpClient()
 http.setApiKey('xxx')
@@ -165,11 +165,11 @@ src/
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/volcengine-ai-mediakit?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmx.dev/package/volcengine-ai-mediakit
-[npm-downloads-src]: https://img.shields.io/npm/dm/volcengine-ai-mediakit?style=flat&colorA=080f12&colorB=1fa669
-[npm-downloads-href]: https://npmx.dev/package/volcengine-ai-mediakit
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/volcengine-ai-mediakit?style=flat&colorA=080f12&colorB=1fa669&label=minzip
-[bundle-href]: https://bundlephobia.com/result?p=volcengine-ai-mediakit
-[license-src]: https://img.shields.io/github/license/zhaogongchengsi/volcengine-ai-mediakit.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/zhaogongchengsi/volcengine-ai-mediakit/blob/main/LICENSE
+[npm-version-src]: https://img.shields.io/npm/v/@zzhqux/volcengine-ai-mediakit?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://npmx.dev/package/@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit
+[npm-downloads-src]: https://img.shields.io/npm/dm/@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-href]: https://npmx.dev/package/@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit?style=flat&colorA=080f12&colorB=1fa669&label=minzip
+[bundle-href]: https://bundlephobia.com/result?p=@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit
+[license-src]: https://img.shields.io/github/license/zhaogongchengsi/@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit.svg?style=flat&colorA=080f12&colorB=1fa669
+[license-href]: https://github.com/zhaogongchengsi/@zzhqux/@zzhqux/@zzhqux/volcengine-ai-mediakit/blob/main/LICENSE
