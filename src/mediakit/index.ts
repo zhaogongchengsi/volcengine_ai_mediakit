@@ -122,8 +122,16 @@ import type {
 
 /* ── 绿幕抠图（video-matte-watermark）型导入 ── */
 import type {
+  AddVideoInvisibleWatermarkParams,
+  AddVideoInvisibleWatermarkResult,
+  ExtractVideoInvisibleWatermarkParams,
+  ExtractVideoInvisibleWatermarkResult,
+  FaceBlurVideoParams,
+  FaceBlurVideoResult,
   MatteGreenscreenVideoParams,
   MatteGreenscreenVideoResult,
+  MattePortraitVideoParams,
+  MattePortraitVideoResult,
 } from './tools/video-matte-watermark.js'
 
 /* ── 视频处理（video-processing）型导入 ── */
@@ -267,8 +275,16 @@ import {
 
 /* ── 绿幕抠图函数导入 ── */
 import {
+  addVideoInvisibleWatermark,
+  addVideoInvisibleWatermarkAndWait,
+  extractVideoInvisibleWatermark,
+  extractVideoInvisibleWatermarkAndWait,
+  faceBlurVideo,
+  faceBlurVideoAndWait,
   matteGreenscreenVideo,
   matteGreenscreenVideoAndWait,
+  mattePortraitVideo,
+  mattePortraitVideoAndWait,
 } from './tools/video-matte-watermark.js'
 
 /* ── 视频处理（video-processing）函数导入 ── */
@@ -295,6 +311,9 @@ export {
   addImageToVideoAndWait,
   addSubtitleToVideo,
   addSubtitleToVideoAndWait,
+  /* 绿幕抠图 */
+  addVideoInvisibleWatermark,
+  addVideoInvisibleWatermarkAndWait,
   adjustAudioSpeed,
   adjustAudioSpeedAndWait,
   adjustVideoSpeed,
@@ -305,9 +324,9 @@ export {
   analyzeVideoStorylineAndWait,
   applyVideoFilter,
   applyVideoFilterAndWait,
+
   asrSubtitles,
   asrSubtitlesAndWait,
-
   assessVideoQuality,
   assessVideoQualityAndWait,
   concatAudio,
@@ -331,9 +350,9 @@ export {
   /* 画质增强（大模型） */
   enhanceVideoGenerative,
   enhanceVideoGenerativeAndWait,
+
   eraseVideoSubtitlePro,
   eraseVideoSubtitleProAndWait,
-
   eraseVideoSubtitleStandard,
   eraseVideoSubtitleStandardAndWait,
   extractAnimatedImage,
@@ -343,11 +362,16 @@ export {
   /* 视频处理 */
   extractFrames,
   extractFramesAndWait,
+  extractVideoInvisibleWatermark,
+  extractVideoInvisibleWatermarkAndWait,
+  faceBlurVideo,
+  faceBlurVideoAndWait,
   fadeAudio,
   fadeAudioAndWait,
   /* 变换类 */
   flipVideo,
   flipVideoAndWait,
+
   gaussianBlurVideo,
   gaussianBlurVideoAndWait,
   /* 高光滑块 */
@@ -355,7 +379,6 @@ export {
   generateHighlightsMicrodramaAndWait,
   generateHighlightsMinigame,
   generateHighlightsMinigameAndWait,
-
   generateHighlightsMovie,
   generateHighlightsMovieAndWait,
   getTask,
@@ -363,10 +386,11 @@ export {
   imageToVideoAndWait,
   martencodeVideo,
   martencodeVideoAndWait,
-  /* 绿幕抠图 */
   matteGreenscreenVideo,
 
   matteGreenscreenVideoAndWait,
+  mattePortraitVideo,
+  mattePortraitVideoAndWait,
   mixAudio,
 
   mixAudioAndWait,
@@ -538,8 +562,16 @@ export type {
 
 /* ── 绿幕抠图类型导出 ── */
 export type {
+  AddVideoInvisibleWatermarkParams,
+  AddVideoInvisibleWatermarkResult,
+  ExtractVideoInvisibleWatermarkParams,
+  ExtractVideoInvisibleWatermarkResult,
+  FaceBlurVideoParams,
+  FaceBlurVideoResult,
   MatteGreenscreenVideoParams,
   MatteGreenscreenVideoResult,
+  MattePortraitVideoParams,
+  MattePortraitVideoResult,
 } from './tools/video-matte-watermark.js'
 
 /* ── 视频处理类型导出 ── */
@@ -1254,6 +1286,8 @@ export class Mediakit {
      🟢 绿幕抠图
      ══════════════════════════════════════════════════════ */
 
+  /* ── 视频绿幕抠图 ── */
+
   matteGreenscreenVideo(
     params: MatteGreenscreenVideoParams,
   ): Promise<CreateTaskResponse> {
@@ -1265,6 +1299,64 @@ export class Mediakit {
     options?: WaitForTaskOptions,
   ): Promise<TaskResult<MatteGreenscreenVideoResult>> {
     return matteGreenscreenVideoAndWait(this.client, params, options)
+  }
+
+  /* ── 视频人像抠图 ── */
+
+  mattePortraitVideo(
+    params: MattePortraitVideoParams,
+  ): Promise<CreateTaskResponse> {
+    return mattePortraitVideo(this.client, params)
+  }
+
+  mattePortraitVideoAndWait(
+    params: MattePortraitVideoParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<MattePortraitVideoResult>> {
+    return mattePortraitVideoAndWait(this.client, params, options)
+  }
+
+  /* ── 视频暗水印添加 ── */
+
+  addVideoInvisibleWatermark(
+    params: AddVideoInvisibleWatermarkParams,
+  ): Promise<CreateTaskResponse> {
+    return addVideoInvisibleWatermark(this.client, params)
+  }
+
+  addVideoInvisibleWatermarkAndWait(
+    params: AddVideoInvisibleWatermarkParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<AddVideoInvisibleWatermarkResult>> {
+    return addVideoInvisibleWatermarkAndWait(this.client, params, options)
+  }
+
+  /* ── 视频暗水印提取 ── */
+
+  extractVideoInvisibleWatermark(
+    params: ExtractVideoInvisibleWatermarkParams,
+  ): Promise<CreateTaskResponse> {
+    return extractVideoInvisibleWatermark(this.client, params)
+  }
+
+  extractVideoInvisibleWatermarkAndWait(
+    params: ExtractVideoInvisibleWatermarkParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<ExtractVideoInvisibleWatermarkResult>> {
+    return extractVideoInvisibleWatermarkAndWait(this.client, params, options)
+  }
+
+  /* ── 视频人脸打码 ── */
+
+  faceBlurVideo(params: FaceBlurVideoParams): Promise<CreateTaskResponse> {
+    return faceBlurVideo(this.client, params)
+  }
+
+  faceBlurVideoAndWait(
+    params: FaceBlurVideoParams,
+    options?: WaitForTaskOptions,
+  ): Promise<TaskResult<FaceBlurVideoResult>> {
+    return faceBlurVideoAndWait(this.client, params, options)
   }
 
   /* ══════════════════════════════════════════════════════
