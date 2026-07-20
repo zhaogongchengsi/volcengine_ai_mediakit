@@ -45,9 +45,9 @@ function createClient(baseURL: string): AxiosInstance {
 
   /* 请求拦截：注入 Authorization 头 */
   instance.interceptors.request.use((config) => {
-    const key = (config as RequestConfig).apiKey ?? globalApiKey
+    const key = ((config as RequestConfig).apiKey ?? globalApiKey)?.trim()
     if (key) {
-      config.headers.Authorization = key
+      config.headers.Authorization = key.startsWith('Bearer ') ? key : `Bearer ${key}`
     }
     return config
   })
